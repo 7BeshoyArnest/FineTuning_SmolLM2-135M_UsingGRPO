@@ -47,15 +47,25 @@ Experiment tracking and training visualization.
 🏗️ Project Structure
 
 FineTuning_SmolLM2-135M_UsingGRPO/
+
 │
+
 ├── grpo_finetune.ipynb        # Main training notebook (GRPO + LoRA)
+
 │
+
 ├── api/
+
 │   └── main.py                # FastAPI inference backend
+
 │
+
 ├── streamlit_app/
+
 │   └── app.py                 # Streamlit frontend application
+
 │
+
 ├── training_metrics/          # Plots of reward curves & training stats
 
 │   ├── train_rewards_reward_len_mean.png
