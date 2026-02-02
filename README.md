@@ -12,6 +12,8 @@ FastAPI backend for inference
 
 Streamlit web application for interactive usage
 
+Docker container for easy, all-in-one deployment (Streamlit + FastAPI)
+
 The project focuses on length-controlled text generation, where the reward function encourages outputs close to a target length.
 
 🔗 Live Demo (Streamlit App):
@@ -73,6 +75,10 @@ FineTuning_SmolLM2-135M_UsingGRPO/
 │   ├── train_rewards_reward_len_std.png
 
 │   └── train_step_time.png
+
+├── Dockerfile
+
+├── .dockerignore
 
 ├── requirements.txt
 
@@ -172,7 +178,20 @@ https://wandb.ai/beshoyarnest01-minia-university/GRPO
 
 🚀 Deployment
 
-1️⃣ FastAPI (Backend)
+1️⃣ Using Docker (Recommended)
+
+The project can be run entirely using Docker—no need to manually install dependencies or run FastAPI/Streamlit separately.
+
+Build the Docker image:
+
+docker build -t grpo-smollm2 .
+
+Run the Docker container:
+
+docker run -p 8501:8501 --name grpo-smollm2-container grpo-smollm2
+
+
+2️⃣ FastAPI (Backend)
 
 The FastAPI service:
 
@@ -186,7 +205,7 @@ Run locally:
 
 uvicorn api.main:app --host 0.0.0.0 --port 8000
 
-2️⃣ Streamlit (Frontend)
+3️⃣ Streamlit (Frontend)
 
 The Streamlit app:
 
