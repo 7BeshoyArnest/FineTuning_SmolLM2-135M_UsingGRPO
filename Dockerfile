@@ -21,7 +21,7 @@ COPY requirements.txt .
 
 # Upgrade pip + install with wheels
 RUN pip install --upgrade pip setuptools wheel && \
-    pip install --no-cache-dir --prefer-binary -r requirements.txt
+    pip install --no-cache-dir --prefer-binary -r requirements-docker.txt
 
 # Copy project files
 COPY . .
