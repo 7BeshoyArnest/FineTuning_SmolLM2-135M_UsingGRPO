@@ -5,6 +5,7 @@ import requests
 import streamlit as st
 import uvicorn
 import socket
+import time
 
 # -----------------------------
 # Make project root importable
@@ -39,6 +40,22 @@ def run_fastapi():
 if "fastapi_started" not in st.session_state:
     threading.Thread(target=run_fastapi, daemon=True).start()
     st.session_state["fastapi_started"] = True
+
+# -----------------------------
+# Wait until FastAPI is ready
+# -----------------------------
+def wait_for_fastapi(url, timeout=60):
+    start = time.time()
+    while True:
+        try:
+            requests.get(url, timeout=2)
+            break
+        except requests.exceptions.RequestException:
+            if time.time() - start > timeout:
+                st.error("FastAPI did not start in time.")
+                return False
+            time.sleep(1)
+    return True
 
 # -----------------------------
 # Streamlit Page Config
@@ -86,31 +103,33 @@ if st.button("Generate Response"):
     if prompt.strip() == "":
         st.warning("Please enter a prompt.")
     else:
-        try:
-            with st.spinner("Generating response..."):
-                response = requests.post(
-                    API_URL,
-                    json={
-                        "prompt": prompt,
-                        "max_new_tokens": max_tokens
-                    },
-                    timeout=60  # زيادة الوقت لتجنب timeout
-                )
+        # انتظر FastAPI يبقى جاهز
+        if wait_for_fastapi(f"http://127.0.0.1:{FASTAPI_PORT}"):
+            try:
+                with st.spinner("Generating response..."):
+                    response = requests.post(
+                        API_URL,
+                        json={
+                            "prompt": prompt,
+                            "max_new_tokens": max_tokens
+                        },
+                        timeout=120  # زيادة الوقت لتجنب timeout
+                    )
 
-            if response.status_code == 200:
-                result = response.json()
-                generated_text = result.get("generated_text", "")
+                if response.status_code == 200:
+                    result = response.json()
+                    generated_text = result.get("generated_text", "")
 
-                if generated_text:
-                    st.subheader("Model Response")
-                    st.success(generated_text)
-                    st.caption(f"Length: {len(generated_text)} characters")
+                    if generated_text:
+                        st.subheader("Model Response")
+                        st.success(generated_text)
+                        st.caption(f"Length: {len(generated_text)} characters")
+                    else:
+                        st.info("The model did not generate a response.")
                 else:
-                    st.info("The model did not generate a response.")
-            else:
-                st.error(
-                    f"API Error: {response.json().get('detail', 'Unknown error')}"
-                )
+                    st.error(
+                        f"API Error: {response.json().get('detail', 'Unknown error')}"
+                    )
 
-        except requests.exceptions.RequestException as e:
-            st.error(f"❌ Could not connect to the FastAPI server: {e}")
+            except requests.exceptions.RequestException as e:
+                st.error(f"❌ Could not connect to the FastAPI server: {e}")
