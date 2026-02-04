@@ -82,6 +82,8 @@ FineTuning_SmolLM2-135M_UsingGRPO/
 
 ├── requirements.txt
 
+├── requirements-docker.txt
+
 └── README.md
 
 📊 Dataset
