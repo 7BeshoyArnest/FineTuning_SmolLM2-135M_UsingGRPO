@@ -181,7 +181,7 @@ https://wandb.ai/beshoyarnest01-minia-university/GRPO
 
 ## Benchmark Results
 
-Evaluated using [TPN Bench](https://bench.trueperformancenetwork.com/) and lm-evaluation-harness.
+Evaluated using [TPN Bench](https://bench.trueperformancenetwork.com/) and [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness).
 
 | Benchmark | Metric | Score |
 
@@ -198,8 +198,12 @@ Evaluated using [TPN Bench](https://bench.trueperformancenetwork.com/) and lm-ev
 - Evaluation mode: Plain prompts
   
 - Runtime backend: vLLM
+  
+- [View Full Benchmark Report](https://bench.trueperformancenetwork.com/orders/04250ff2-c3a8-4752-89e7-449944ebf542)
 
-> Note: This is an initial evaluation result. A comparison
+> **Note:**
+
+> This is an initial evaluation result. A comparison
 
 > against the original base model is needed to measure
 
