@@ -178,6 +178,34 @@ W&B Project:
 
 https://wandb.ai/beshoyarnest01-minia-university/GRPO
 
+
+## Benchmark Results
+
+Evaluated using [TPN Bench](https://bench.trueperformancenetwork.com/) and lm-evaluation-harness.
+
+| Benchmark | Metric | Score |
+
+|---|---|---:|
+
+| ARC-Challenge | Normalized Accuracy | 27.99% |
+
+**Evaluation Details:**
+
+- Test samples: 1,172
+  
+- Model revision: `9b01868`
+  
+- Evaluation mode: Plain prompts
+  
+- Runtime backend: vLLM
+
+> Note: This is an initial evaluation result. A comparison
+
+> against the original base model is needed to measure
+
+> the actual impact of GRPO fine-tuning.
+
+
 🚀 Deployment
 
 1️⃣ Using Docker (Recommended)
